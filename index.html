@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <title>Association of Bengalis</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Association of Bengalis</title>
-    <link rel="icon" type="image/x-icon" href="/img/logo.ico">
+    
     <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans&display=swap" rel="stylesheet"> <!-- https://fonts.google.com/specimen/Kumbh+Sans -->
     <link rel="stylesheet" href="fontawesome/css/all.min.css">  <!-- https://fontawesome.com/-->  
     <link rel="stylesheet" href="css/magnific-popup.css">       <!-- https://dimsemenov.com/plugins/magnific-popup/ -->
@@ -41,12 +44,13 @@ https://www.tooplate.com/view/2124-vertex
         </button>
         <ul id="tm-main-nav">
 
+            <!-- logo
             <li class="nav-item">    
                 <a class="nav-link current">
-                    <img src="img/logo.jpg" alt="Intro image" style="width:100px;height:100px;">
+                    <img src="img/logo.jpg" alt="Intro image" style="width:75px;height:75px;">
                 </a>                            
             </li>
-
+            logo -->
             <li class="nav-item">                                
                 <a href="#intro" class="nav-link current">
                     Introduction
@@ -84,13 +88,15 @@ https://www.tooplate.com/view/2124-vertex
             <!-- Services left -->
             <div class="tm-section-col tm-content">
                 <h1 class="tm-text-primary">Make AOB your Home </h1>
+            </br></br></br></br></br>
                 <h3>
                     AOB is a collaborative effort driven by the desire to create a thriving Bay Area Bengali
 community. We invite you to join us on this exciting journey of connection, celebration, and
 empowerment. Add your voice...
                 </h3>
                 </br>
-                </br>
+                </br></br></br></br></br>
+                </br></br>
 
                 <h2> Our first cultural meet, Nabadiganta</h2>
 <!--
@@ -538,7 +544,8 @@ empowerment. Add your voice...
                     <a href="https://www.facebook.com/aobsf">Facebook</a>
 
                 </p> 
-                <form id="contact-form" action="" method="POST" class="tm-contact-form tm-mb-200">
+            
+                <form id="contact-form" name="contact-form" action="" method="POST" class="tm-contact-form tm-mb-200">
                     <div class="form-group">
                         <input type="text" name="name" class="form-control rounded-0" placeholder="Name" required />
                     </div>
@@ -550,16 +557,21 @@ empowerment. Add your voice...
                     </div>
 
                     <div class="form-group tm-text-right">
-                        <button type="submit" class="tm-btn">Send</button>
+                        <button id="submit-button-sn" type="submit" value="Send" class="tm-btn">Send</button>
                     </div>
+                
                 </form>
+
+                <div id="sending-message" style="display: none;">Please wait, Your message is being sent...</div>
+                <div id="success-message" style="display: none;">Your message has been sent. Thank you!</div>           
+                
                 <footer class="tm-copyright tm-text-small">
                     Copyright AoB 
                 </footer>              
             </div>
             
             <!-- Contact right -->
-            <div class="tm-section-col tm-parallax tm-relative" data-parallax="scroll" data-image-src="img/baul.jpg">
+            <div class="tm-section-col tm-parallax tm-relative" data-parallax="scroll" data-image-src="img/flyer2.png">
                 <!-- Map 
                 <div class="mapouter">
                     <div class="gmap-canvas">
@@ -675,5 +687,29 @@ empowerment. Add your voice...
             });
         });
     </script>
+
+<script>
+    var scriptURL = 'https://script.google.com/macros/s/AKfycbyS9cNqNcDmgsZOSHa5ZEY4rR26CD63aBjN1psnfSjfCaVPqFA4RFDA89xmaduS9Gx5xw/exec'
+    var form = document.forms['contact-form']
+    var successMessage = document.getElementById('success-message');
+    var sendingMessage = document.getElementById('sending-message');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault()
+        form.style.display = 'none'; // hide the form immediately
+        sendingMessage.style.display = 'block'; // show the sending message
+        fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+            .then(function(response) {
+                console.log('Success!', response)
+                sendingMessage.style.display = 'none'; // hide the sending message
+                successMessage.style.display = 'block'; // show the success message
+            })
+            .catch(function(error) {
+                console.error('Error!', error.message)
+                form.style.display = 'block'; // show the form again in case of error
+                sendingMessage.style.display = 'none'; // hide the sending message
+            })
+    })
+</script>
 </body>
 </html>
