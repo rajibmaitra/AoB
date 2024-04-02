@@ -557,13 +557,32 @@ https://www.tooplate.com/view/2124-vertex
             
                 <form id="contact-form" name="contact-form" action="" method="POST" class="tm-contact-form tm-mb-200">
                     <div class="form-group">
-                        <input type="text" name="name" class="form-control rounded-0" placeholder="Name" required />
+                        <input type="text" name="fname" class="form-control rounded-0" placeholder="First Name" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="lname" class="form-control rounded-0" placeholder="Last Name" required />
                     </div>
                     <div class="form-group">
                         <input type="email" name="email" class="form-control rounded-0" placeholder="Email" required />
                     </div>
+
                     <div class="form-group">
-                        <textarea rows="6" name="message" class="form-control rounded-0" placeholder="Registration or Your Message" ></textarea>
+                        
+                        <select id="type" name="type" class="form-control rounded-0">
+                            <option value="Registration">Select Purpose</option>
+                            <option value="Registration">Registration</option>
+                            <option value="Volunteer">Volunteer</option>
+                            <option value="Membership">Membership</option>
+                            <option value="Sponsorship">Sponsorship</option>
+                            <option value="Vendor">Vendor</option>
+                            <option value="General">General</option>
+
+                        </select>
+                    </div>
+                    
+                    
+                    <div class="form-group">
+                        <textarea rows="6" name="message" class="form-control rounded-0" placeholder="Your Message" ></textarea>
                     </div>
 
                     <div class="form-group tm-text-right">
@@ -704,7 +723,7 @@ https://www.tooplate.com/view/2124-vertex
     </script>
 
 <script>
-    var scriptURL = 'https://script.google.com/macros/s/AKfycbwDoGOb90xnU1jD4MhLZFQlRxL_HUOgBM8SS7PTHQTzqcIK9V8WXpfcQw6PigdPPH7ohA/exec'
+    var scriptURL = 'https://script.google.com/macros/s/AKfycbz3adk5OuSEhgLjKsy9WPC6XnQ_Z2Skt1G22_jAnSHQwKiVnZcg6eGFId34bs0IVwZ_Kg/exec'
     var form = document.forms['contact-form']
     var successMessage = document.getElementById('success-message');
     var sendingMessage = document.getElementById('sending-message');
