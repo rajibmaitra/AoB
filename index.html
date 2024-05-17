@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="fontawesome/css/all.min.css">  <!-- https://fontawesome.com/-->  
     <link rel="stylesheet" href="css/magnific-popup.css">       <!-- https://dimsemenov.com/plugins/magnific-popup/ -->
     <link rel="stylesheet" href="css/tooplate-vertex.css">
+
+    <script src="https://www.paypal.com/sdk/js?client-id=BAAwGKbsL5HTdl7ybnpTAsTQke_xniN7vKAwv7duWq2UTfhfefEM6R_XkyughS-rcogFAZfmDCtScfAZAU&components=hosted-buttons&enable-funding=venmo&currency=USD"></script>
 <!--
 
 Tooplate 2124 Vertex
@@ -90,26 +92,29 @@ https://www.tooplate.com/view/2124-vertex
         <div id="intro" class="tm-section">
             <!-- Services left -->
             <div class="tm-section-col tm-content">
+                
+                <h1 class="tm-text-primary">Nabadiganta on 13th July, 2024 </h1>
+                <h3> FREE entry to Pavilion hosting </h3>
+                <h4> The grand Ilish Utsav, Lit Meet, Next Gen activities, Shopping bonanza at Treasure Island, Kids play area & other exciting meetups 
+                </h4>
+                <h3 class="tm-text-primary"> The auditorium requires tickets and will be home to Cultural presentations including the amazing #ParamPiya event
+                </h3>
+               
+                <h2> Reserve your Tickets Now</h2>
+                <div id="paypal-container-WZHU3LX9XW342"></div>
+                <script>
+                    paypal.HostedButtons({
+                    hostedButtonId: "WZHU3LX9XW342",
+                    }).render("#paypal-container-WZHU3LX9XW342")
+                </script>
+
+                </br>
                 <h1 class="tm-text-primary">Make AOB your Home </h1>
-                </br></br></br></br></br>
                 <h3>
                     AOB is a collaborative effort driven by the desire to create a thriving Bay Area Bengali community. We invite you to join us on this exciting journey of connection, celebration, and empowerment. Add your voice...
                 </h3>
-                </br>
-                </br></br></br></br></br>
-                </br></br>
 
-                <h2> Our first cultural meet Nabadiganta, Date: 13th July, 2024, </h2>
-                <h3> FREE entry to Pavilion hosting </h3>
-                <h4> The grand Ilish Utsav, Lit Meet, Next Gen activities, Shopping bonanza at Treasure Island, Kids play area & other exciting meetups </h4>
-                </br></br>
-               
-                <h2> <a href="https://sulekha.com/nabadiganta"> Reserve your Tickets</a> </h2>
-                <h3 class="tm-text-primary"> 
-                    <a href="https://sulekha.com/nabadiganta">
-                        The auditorium requires tickets and will be home to Cultural presentations including the amazing #ParamPiya event
-                    </a>
-                </h3>
+                
                 <!--
                 <div class="tm-text-right">
                     <a href="#gallery" class="tm-btn tm-btn-next">Next page</a>
@@ -789,6 +794,110 @@ https://www.tooplate.com/view/2124-vertex
                 sendingMessage.style.display = 'none'; // hide the sending message
             })
     })
+
+    window.paypal
+  .Buttons({
+    style: {
+      shape: "rect",
+      layout: "vertical",
+    },
+    async createOrder() {
+      try {
+        const response = await fetch("/api/orders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // use the "body" param to optionally pass additional order information
+          // like product ids and quantities
+          body: JSON.stringify({
+            cart: [
+              {
+                id: "YOUR_PRODUCT_ID",
+                quantity: "YOUR_PRODUCT_QUANTITY",
+              },
+            ],
+          }),
+        });
+
+        const orderData = await response.json();
+
+        if (orderData.id) {
+          return orderData.id;
+        } else {
+          const errorDetail = orderData?.details?.[0];
+          const errorMessage = errorDetail
+            ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
+            : JSON.stringify(orderData);
+
+          throw new Error(errorMessage);
+        }
+      } catch (error) {
+        console.error(error);
+        resultMessage(`Could not initiate PayPal Checkout...<br><br>${error}`);
+      }
+    },
+    async onApprove(data, actions) {
+      try {
+        const response = await fetch(`/api/orders/${data.orderID}/capture`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const orderData = await response.json();
+        // Three cases to handle:
+        //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+        //   (2) Other non-recoverable errors -> Show a failure message
+        //   (3) Successful transaction -> Show confirmation or thank you message
+
+        const errorDetail = orderData?.details?.[0];
+
+        if (errorDetail?.issue === "INSTRUMENT_DECLINED") {
+          // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+          // recoverable state, per https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
+          return actions.restart();
+        } else if (errorDetail) {
+          // (2) Other non-recoverable errors -> Show a failure message
+          throw new Error(`${errorDetail.description} (${orderData.debug_id})`);
+        } else if (!orderData.purchase_units) {
+          throw new Error(JSON.stringify(orderData));
+        } else {
+          // (3) Successful transaction -> Show confirmation or thank you message
+          // Or go to another URL:  actions.redirect('thank_you.html');
+          const transaction =
+            orderData?.purchase_units?.[0]?.payments?.captures?.[0] ||
+            orderData?.purchase_units?.[0]?.payments?.authorizations?.[0];
+          resultMessage(
+            `Transaction ${transaction.status}: ${transaction.id}<br><br>See console for all available details`,
+          );
+          console.log(
+            "Capture result",
+            orderData,
+            JSON.stringify(orderData, null, 2),
+          );
+        }
+      } catch (error) {
+        console.error(error);
+        resultMessage(
+          `Sorry, your transaction could not be processed...<br><br>${error}`,
+        );
+      }
+    },
+  })
+  .render("#paypal-button-container");
+
+// Example function to show a result to the user. Your site's UI library can be used instead.
+function resultMessage(message) {
+  const container = document.querySelector("#result-message");
+  container.innerHTML = message;
+}
+
+
+
+
+
 </script>
 </body>
 </html>
