@@ -109,12 +109,30 @@ https://www.tooplate.com/view/2124-vertex
                 }).render("#paypal-container-DNGZJZ7UY6ZHS")
                 </script>
 
-                </br></br></br></br></br>
+                </br></br>
+
+                <h3 class="tm-text-primary">Paypal & Zelle QR Codes</h3>
+                <div id="payment">
+                    <img src="img/Nabadiganta Ti-qrcode.png" alt="Paypal" style="width:150px;height:150px;" Style="text-align:left">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <img src="img/Zelle QR Code.png" alt="Zelle" style="width:150px;height:150px;" Style="text-align:right">
+                    </br>
+                    </br>
+                    
+                </div>
+                </br>
+                </br>
+
+
+
                 <h1 class="tm-text-primary">Make AOB your Home </h1>
                 <h3>
                     AOB is a collaborative effort driven by the desire to create a thriving Bay Area Bengali community. We invite you to join us on this exciting journey of connection, celebration, and empowerment. Add your voice...
                 </h3>
 
+                               
+            </br>
+        </br>
                 
                 <!--
                 <div class="tm-text-right">
@@ -416,6 +434,9 @@ https://www.tooplate.com/view/2124-vertex
                 <div class="tm-paging tm-mb-130"></div>
             </div>
         </div>
+
+    </br>
+    
         <!-- 2 Gallery ON for Now -->
 
 
@@ -573,6 +594,7 @@ https://www.tooplate.com/view/2124-vertex
             <div class="tm-section-col tm-parallax" data-parallax="scroll" data-image-src="img/bitan.jpg"></div>
         </div> <!-- #about -->
 
+        </br>
         <!-- #Contact Us -->
         <div id="contact" class="tm-section">
             <div id="volunteer">
@@ -580,8 +602,7 @@ https://www.tooplate.com/view/2124-vertex
             </div>
             <!-- Contact left -->
             <div class="tm-section-col tm-content tm-content-small">
-                <h2 class="tm-text-primary">Register</h2>
-                <h3 class="tm-text-primary">or Contact us</h3>
+                <h2 class="tm-text-primary">Send a message to Team AoB</h2>
             
                 <form id="contact-form" name="contact-form" action="" method="POST" class="tm-contact-form tm-mb-200">
                     <div class="form-group">
@@ -597,7 +618,7 @@ https://www.tooplate.com/view/2124-vertex
                     <div class="form-group">
                         
                         <select id="type" name="type" class="form-control rounded-0">
-                            <option value="Registration">Select Purpose</option>
+                            <option value="Registration">Select ... </option>
                             <option value="Registration">Nabadiganta Tickets</option>
                             <option value="Registration">Registration</option>
                             <option value="Volunteer">Volunteer</option>
@@ -629,25 +650,21 @@ https://www.tooplate.com/view/2124-vertex
 
                 </p> 
 
-                
                 </br>
-                </br>
-                <h3 class="tm-text-primary">Payment</h3>
-                <div id="payment">
-                    <img src="img/Paypal QR Code.png" alt="Paypal image" style="width:100px;height:100px;">
-                    </br>
-                    <a href="https://www.paypal.com/donate/?hosted_button_id=LUBKJTXMYZ4CE">Paypal: contact@aobforum.org</a>
-                    </br>
-                    </br>
-                    <img src="img/Zelle QR Code.png" alt="Zelle image" style="width:100px;height:100px;">
-                    </br>
-                    <a href="https://www.paypal.com/donate/?hosted_button_id=LUBKJTXMYZ4CE">Zelle: contact@aobforum.org</a>
-                    </br>
-                    
+
+                <div id="donation">
+                    <h1>
+                        <a href="https://www.paypal.com/donate/?hosted_button_id=9F8957YB6EJLJ">
+                            Let us build a Coffee House
+                       </a> 
+                    </h1>
+                    <h3>         
+                        <a href="https://www.paypal.com/donate/?hosted_button_id=9F8957YB6EJLJ">
+                             please donate via Paypal
+                        </a>
+                    </h3>     
                 </div>
-                </br>
-                </br>
-                </br>
+
                 <footer class="tm-copyright tm-text-small">
                     Copyright AoB 
                 </footer>              
@@ -795,110 +812,6 @@ https://www.tooplate.com/view/2124-vertex
                 sendingMessage.style.display = 'none'; // hide the sending message
             })
     })
-
-    window.paypal
-  .Buttons({
-    style: {
-      shape: "rect",
-      layout: "vertical",
-    },
-    async createOrder() {
-      try {
-        const response = await fetch("/api/orders", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          // use the "body" param to optionally pass additional order information
-          // like product ids and quantities
-          body: JSON.stringify({
-            cart: [
-              {
-                id: "YOUR_PRODUCT_ID",
-                quantity: "YOUR_PRODUCT_QUANTITY",
-              },
-            ],
-          }),
-        });
-
-        const orderData = await response.json();
-
-        if (orderData.id) {
-          return orderData.id;
-        } else {
-          const errorDetail = orderData?.details?.[0];
-          const errorMessage = errorDetail
-            ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
-            : JSON.stringify(orderData);
-
-          throw new Error(errorMessage);
-        }
-      } catch (error) {
-        console.error(error);
-        resultMessage(`Could not initiate PayPal Checkout...<br><br>${error}`);
-      }
-    },
-    async onApprove(data, actions) {
-      try {
-        const response = await fetch(`/api/orders/${data.orderID}/capture`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        const orderData = await response.json();
-        // Three cases to handle:
-        //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-        //   (2) Other non-recoverable errors -> Show a failure message
-        //   (3) Successful transaction -> Show confirmation or thank you message
-
-        const errorDetail = orderData?.details?.[0];
-
-        if (errorDetail?.issue === "INSTRUMENT_DECLINED") {
-          // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-          // recoverable state, per https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
-          return actions.restart();
-        } else if (errorDetail) {
-          // (2) Other non-recoverable errors -> Show a failure message
-          throw new Error(`${errorDetail.description} (${orderData.debug_id})`);
-        } else if (!orderData.purchase_units) {
-          throw new Error(JSON.stringify(orderData));
-        } else {
-          // (3) Successful transaction -> Show confirmation or thank you message
-          // Or go to another URL:  actions.redirect('thank_you.html');
-          const transaction =
-            orderData?.purchase_units?.[0]?.payments?.captures?.[0] ||
-            orderData?.purchase_units?.[0]?.payments?.authorizations?.[0];
-          resultMessage(
-            `Transaction ${transaction.status}: ${transaction.id}<br><br>See console for all available details`,
-          );
-          console.log(
-            "Capture result",
-            orderData,
-            JSON.stringify(orderData, null, 2),
-          );
-        }
-      } catch (error) {
-        console.error(error);
-        resultMessage(
-          `Sorry, your transaction could not be processed...<br><br>${error}`,
-        );
-      }
-    },
-  })
-  .render("#paypal-button-container");
-
-// Example function to show a result to the user. Your site's UI library can be used instead.
-function resultMessage(message) {
-  const container = document.querySelector("#result-message");
-  container.innerHTML = message;
-}
-
-
-
-
-
 </script>
 </body>
 </html>
