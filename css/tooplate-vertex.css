@@ -556,6 +556,20 @@ figure.effect-goliath:hover p {
     margin-bottom: -50px;
 }
 
+.button {
+    border: none;
+    color: white;
+    padding: 10px 26px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 4px 2px;
+    cursor: pointer;
+    background-color: #050942;
+}
+  
+
 @media (max-width: 1200px) {
     .tm-nav { width: 0; }
     .tm-nav ul {
