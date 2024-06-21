@@ -196,6 +196,7 @@ span, footer {  line-height: 1.8; }
 .tm-text-center { text-align: center; }
 .tm-text-right { text-align: right; }
 .tm-text-primary { color: #99CC99; }
+.tm-text-primary-c1 { color: #359ee8; }
 .tm-text-secondary { color: #9999CC; }
 .tm-text-link { color: #999; }
 .tm-text-link:hover { color: #99CC99; }
