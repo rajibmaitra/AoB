@@ -236,6 +236,11 @@ span, footer {  line-height: 1.8; }
     width: 50%;
 }
 
+.tm-section-col-1 {
+    flex: 0 0 50%;
+    width: 100%;
+}
+
 .tm-content {
     padding: 180px 60px 70px 100px;
     box-sizing: border-box;
