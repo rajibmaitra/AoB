@@ -152,7 +152,7 @@ html, body { overflow-x: hidden; }
 body { 
     font-family: 'Kumbh Sans', sans-serif;
     font-size: 18px;
-    background-color: #5b2721;
+    background-color: #60371a;
     color: #ffffff;
     margin: 0;
 }
@@ -289,12 +289,12 @@ span, footer {  line-height: 1.8; }
     position: fixed;
     top: 0;
     left: -1px;
-    width: 50%;
+    width: 100%;
     z-index: 1000;  
 }
 
 .tm-nav ul {
-    background-color: #720000;
+    background-color: #3e220f;
     display: flex;
     justify-content: space-around;
 }
@@ -453,6 +453,7 @@ figure.effect-goliath img {
 figure.effect-goliath h2,
 figure.effect-goliath p {
 	position: absolute;
+    font-size: 75%;
 	bottom: 0;
 	left: 0;
     padding: 30px 10px;
