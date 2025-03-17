@@ -146,17 +146,18 @@ https://ihatetomatoes.net/create-custom-preloading-screen/
     }
 
 /* General */
+/* Rajib background */
 
 * {  box-sizing: border-box; }
 html, body { overflow-x: hidden; }
 body { 
     font-family: 'Kumbh Sans', sans-serif;
     font-size: 18px;
-    background-color: #60371a;
+    background-color: #551a1a;
     color: #ffffff;
     margin: 0;
 }
-a { color: #fff; text-decoration: none; }
+a { color: #bc4718; text-decoration: none; }
 a:hover {  color: #9C9; }
 button { cursor: pointer; }
 a, button { transition: all 0.3s ease; }
@@ -282,14 +283,15 @@ span, footer {  line-height: 1.8; }
 .tm-brand-icon { margin-bottom: 25px; }
 .tm-brand-text { font-size: 32px; }
 
-/* Nav */
+/* Rajib menu nav bar Nav */
 .navbar-toggler { display: none; }
+
 
 .tm-nav {
     position: fixed;
     top: 0;
     left: -1px;
-    width: 100%;
+    width:100%;
     z-index: 1000;  
 }
 
