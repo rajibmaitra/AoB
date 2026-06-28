@@ -153,12 +153,12 @@ html, body { overflow-x: hidden; }
 body { 
     font-family: 'Kumbh Sans', sans-serif;
     font-size: 18px;
-    background-color: #551a1a;
+    background-color: #1f1414;
     color: #ffffff;
     margin: 0;
 }
-a { color: #bc4718; text-decoration: none; }
-a:hover {  color: #9C9; }
+a { color: #e67e22; text-decoration: none; }
+a:hover {  color: #99CC99; }
 button { cursor: pointer; }
 a, button { transition: all 0.3s ease; }
 ul {
@@ -186,11 +186,16 @@ span, footer {  line-height: 1.8; }
     color: #999;
     padding: 14px 40px;
     font-size: 20px;
+    border-radius: 30px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .tm-btn:hover {
-    color: #99CC99;
+    color: #1f1414;
+    background-color: #99CC99;
     border-color: #99CC99;
+    box-shadow: 0 6px 20px rgba(153, 204, 153, 0.4);
+    transform: translateY(-2px);
 }
 
 .tm-text-small { font-size: 0.9em; }
@@ -296,7 +301,10 @@ span, footer {  line-height: 1.8; }
 }
 
 .tm-nav ul {
-    background-color: #3e220f;
+    background-color: rgba(62, 34, 15, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     justify-content: space-around;
 }
@@ -326,6 +334,9 @@ span, footer {  line-height: 1.8; }
 .tm-media img {
     width: 200px;
     height: 200px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    object-fit: cover;
 }
 
 .tm-media-body {  padding-left: 30px; }
@@ -372,6 +383,14 @@ span, footer {  line-height: 1.8; }
 	width: 25%;
 	text-align: center;
 	cursor: pointer;
+	border-radius: 12px;
+	box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tm-gallery figure:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 12px 28px rgba(0,0,0,0.4);
 }
 
 .tm-gallery figure img {
@@ -380,6 +399,7 @@ span, footer {  line-height: 1.8; }
 	min-height: 100%;
 	max-width: 100%;
 	opacity: 0.8;
+	border-radius: 12px;
 }
 
 .tm-gallery figure figcaption {
@@ -548,8 +568,11 @@ figure.effect-goliath:hover p {
 }
 
 .form-control:focus {
-    color: #999;
+    color: #fff;
     background: transparent;
+    border-bottom-color: #99CC99;
+    outline: none;
+    box-shadow: none;
 }
 
 .mapouter {
@@ -694,4 +717,16 @@ figure.effect-goliath:hover p {
         width: 100px;
         height: 100px;
     }
+}
+
+#payment img {
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    margin: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#payment img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
 }
